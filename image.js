@@ -12,9 +12,15 @@ const mouse = {
     radius: 60
 };
 
+let throttleTimer;
 window.addEventListener('mousemove', function(event) {
-    mouse.x = event.x;
-    mouse.y = event.y;
+    if (throttleTimer) {
+        clearTimeout(throttleTimer);
+    }
+    throttleTimer = setTimeout(function() {
+        mouse.x = event.x;
+        mouse.y = event.y;
+    }, 10);
 });
 
 class Particle {
@@ -37,19 +43,21 @@ class Particle {
     }
 
     update() {
-        let dx = mouse.x - this.x;
-        let dy = mouse.y - this.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-        let forceDirectionX = dx / distance;
-        let forceDirectionY = dy / distance;
-        let maxDistance = mouse.radius;
-        let force = (maxDistance - distance) / maxDistance;
-        let directionX = forceDirectionX * force * this.density;
-        let directionY = forceDirectionY * force * this.density;
+        if (Math.abs(mouse.x - this.x) < mouse.radius && Math.abs(mouse.y - this.y) < mouse.radius) {
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            let forceDirectionX = dx / distance;
+            let forceDirectionY = dy / distance;
+            let maxDistance = mouse.radius;
+            let force = (maxDistance - distance) / maxDistance;
+            let directionX = forceDirectionX * force * this.density;
+            let directionY = forceDirectionY * force * this.density;
 
-        if (distance < mouse.radius) {
-            this.x -= directionX;
-            this.y -= directionY;
+            if (distance < mouse.radius) {
+                this.x -= directionX;
+                this.y -= directionY;
+            }
         } else {
             if (this.x !== this.baseX) {
                 let dx = this.x - this.baseX;
