@@ -1,17 +1,16 @@
 const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d');
-
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particlesArray = [];
-const numberOfParticles = 5000; // Adjust the number of particles here
+const numberOfParticles = 5000;
 
 const mouse = {
     x: null,
     y: null,
-    radius: 150
-}
+    radius: 60
+};
 
 window.addEventListener('mousemove', function(event) {
     mouse.x = event.x;
@@ -24,9 +23,6 @@ class Particle {
         this.y = y;
         this.color = color;
         this.size = size;
-        this.baseX = this.x;
-        this.baseY = this.y;
-        this.density = (Math.random() * 40) + 5;
     }
 
     draw() {
@@ -38,70 +34,40 @@ class Particle {
     }
 
     update() {
-        let dx = mouse.x - this.x;
-        let dy = mouse.y - this.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-        let forceDirectionX = dx / distance;
-        let forceDirectionY = dy / distance;
-        let maxDistance = mouse.radius;
-        let force = (maxDistance - distance) / maxDistance;
-        let directionX = forceDirectionX * force * this.density;
-        let directionY = forceDirectionY * force * this.density;
-
-        if (distance < mouse.radius) {
-            this.x -= directionX;
-            this.y -= directionY;
-        } else {
-            if (this.x !== this.baseX) {
-                let dx = this.x - this.baseX;
-                this.x -= dx / 10;
-            }
-            if (this.y !== this.baseY) {
-                let dy = this.y - this.baseY;
-                this.y -= dy / 10;
-            }
-        }
+        // Particle movement logic here if needed
     }
 }
 
-function init() {
+function init(imageData, width, height) {
     particlesArray = [];
-    const image = new Image();
-    image.src = 'assets/Banner.png'; // Replace with your image path
-
-    image.onload = function() {
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        console.log("Image loaded and drawn on canvas.");
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        let grid = Math.ceil(Math.sqrt(numberOfParticles));
-        let gridWidth = canvas.width / grid;
-        let gridHeight = canvas.height / grid;
-
-        for (let y = 0; y < canvas.height; y += gridHeight) {
-            for (let x = 0; x < canvas.width; x += gridWidth) {
-                let pixel = imageData.data[(y * 4 * imageData.width) + (x * 4)];
-                let red = imageData.data[(y * 4 * imageData.width) + (x * 4)];
-                let green = imageData.data[(y * 4 * imageData.width) + (x * 4) + 1];
-                let blue = imageData.data[(y * 4 * imageData.width) + (x * 4) + 2];
-                let color = 'rgba(' + red + ',' + green + ',' + blue + ')';
-                particlesArray.push(new Particle(x, y, color, 2));
-            }
-        }
-    };
-    console.log("Script loaded. Waiting for image to load.");
+    for (let i = 0; i < numberOfParticles; i++) {
+        let x = Math.random() * width;
+        let y = Math.random() * height;
+        let rgb = imageData[Math.floor(y / height * imageData.length)];
+        let color = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`;
+        particlesArray.push(new Particle(x, y, color, 2));
+    }
 }
-
-init();
 
 function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].draw();
-        particlesArray[i].update();
+    for (let particle of particlesArray) {
+        particle.draw();
     }
 }
 
-animate();
+// Load and process image
+const image = new Image();
+image.src = 'assets/Banner.png'; // Your image path
+image.onload = function() {
+    ctx.drawImage(image, 0, 0);
+    let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    let imageData = [];
+    for (let i = 0; i < pixels.length; i += 4) {
+        imageData.push([pixels[i], pixels[i + 1], pixels[i + 2]]);
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    init(imageData, canvas.width, canvas.height);
+    animate();
+};
