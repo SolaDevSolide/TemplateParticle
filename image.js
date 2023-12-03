@@ -4,7 +4,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particlesArray = [];
-const numberOfParticles = 5000;
+const numberOfParticles = 50000;
 
 const mouse = {
     x: null,
@@ -23,6 +23,9 @@ class Particle {
         this.y = y;
         this.color = color;
         this.size = size;
+        this.baseX = x;
+        this.baseY = y;
+        this.density = (Math.random() * 30) + 1;
     }
 
     draw() {
@@ -34,9 +37,42 @@ class Particle {
     }
 
     update() {
-        // Particle movement logic here if needed
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        let forceDirectionX = dx / distance;
+        let forceDirectionY = dy / distance;
+        let maxDistance = mouse.radius;
+        let force = (maxDistance - distance) / maxDistance;
+        let directionX = forceDirectionX * force * this.density;
+        let directionY = forceDirectionY * force * this.density;
+
+        if (distance < mouse.radius) {
+            this.x -= directionX;
+            this.y -= directionY;
+        } else {
+            if (this.x !== this.baseX) {
+                let dx = this.x - this.baseX;
+                this.x -= dx / 10;
+            }
+            if (this.y !== this.baseY) {
+                let dy = this.y - this.baseY;
+                this.y -= dy / 10;
+            }
+        }
     }
 }
+
+function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+    }
+}
+
 
 function init(imageData, width, height) {
     particlesArray = [];
@@ -49,17 +85,10 @@ function init(imageData, width, height) {
     }
 }
 
-function animate() {
-    requestAnimationFrame(animate);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let particle of particlesArray) {
-        particle.draw();
-    }
-}
-
 // Load and process image
 const image = new Image();
-image.src = 'assets/Banner.png'; // Your image path
+image.crossOrigin = "anonymous";
+image.src = 'https://cors-anywhere.herokuapp.com/' + encodeURIComponent('assets/Banner.png');
 image.onload = function() {
     ctx.drawImage(image, 0, 0);
     let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
