@@ -1,13 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Particle Text Interaction</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <canvas id="particleCanvas"></canvas>
-    <script src="image.js"></script>
-</body>
-</html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Particle Text and Content</title>
+        <link
+        rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <div id="particleBackground" class="background-canvas">
+                <canvas id="backgroundCanvas"></canvas>
+            </div>
+            <div class="content-container">
+                <div class="left-section">
+                    <canvas id="particleCanvas"></canvas>
+                    <div class="social-content">
+                        <div class="social-media-links">
+                            <a href="https://www.facebook.com/La404Devinci" class="social-link">
+                                <i class="fab fa-facebook-f"></i>
+                                Facebook
+                            </a>
+                            <a href="https://www.instagram.com/la404.devinci/" class="social-link">
+                                <i class="fab fa-instagram"></i>
+                                Instagram
+                            </a>
+                            <a href="https://www.linkedin.com/company/la-404-devinci" class="social-link">
+                                <i class="fab fa-linkedin"></i>
+                                LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-section">
+                    <p class="description">
+                        DEV/INCI, c'est la fausse association de développement web du Pôle ! En effet c'est une association "exemple" pour vous permettre de tester votre template. Vous pouvez donc utiliser cette description pour tester le responsive de votre site, ou même savoir s'il supporte les emojis ✨
+                        
+                        💡 Notez que certaines assos nous ont envoyés des description super courtes! Certaines faisant que une dizaines de mots (pratique pour un texte qui défile par exemple). D'autres nous ont envoyés des pavés (un peu plus compliqué à l'intégré dans un site :/ ). C'est pour ça que cette description est longue, vous pouvez donc tester votre template avec des textes courts ou même laisser des emplacements pour des paragraphes.
+                        
+                        Bien evidement on se chargera de raccourcir les textes que nous ont envoyés les assos (ou de les allonger) en fonction du template que tu nous rendras, donc ne te soucis pas des textes!
+                        
+                        >>> Code, Responsive, Amuse-toi!
+                        
+                        👾 Bref, on a hâte de voir ce que vous allez nous cook!
+                    </p>
+                    <div class="image-container">
+                        <img src="assets\image-1.jpg" alt="Image 1">
+                        <img src="assets\image-2.jpg" alt="Image 2">
+                        <img src="assets\image-3.jpg" alt="Image 3">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="background.js"></script>
+        <script src="text.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html></body></html>

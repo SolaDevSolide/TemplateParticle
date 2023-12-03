@@ -1,0 +1,9 @@
+DEV/INCI, c'est la fausse association de développement web du Pôle ! En effet c'est une association "exemple" pour vous permettre de tester votre template. Vous pouvez donc utiliser cette description pour tester le responsive de votre site, ou même savoir s'il supporte les emojis ✨
+
+💡 Notez que certaines assos nous ont envoyés des description super courtes! Certaines faisant que une dizaines de mots (pratique pour un texte qui défile par exemple). D'autres nous ont envoyés des pavés (un peu plus compliqué à l'intégré dans un site :/ ). C'est pour ça que cette description est longue, vous pouvez donc tester votre template avec des textes courts ou même laisser des emplacements pour des paragraphes.
+
+Bien evidement on se chargera de raccourcir les textes que nous ont envoyés les assos (ou de les allonger) en fonction du template que tu nous rendras, donc ne te soucis pas des textes!
+
+>>> Code, Responsive, Amuse-toi!
+
+👾 Bref, on a hâte de voir ce que vous allez nous cook!
