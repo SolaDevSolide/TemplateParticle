@@ -97,13 +97,20 @@ function init(imageData, width, height) {
 const image = new Image();
 image.src = 'assets/Banner.png';
 image.onload = function() {
-    ctx.drawImage(image, 0, 0);
-    let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    const scaleFactor = 0.5; // Scale factor (0.5 for half size, for example)
+    const scaledWidth = canvas.width * scaleFactor;
+    const scaledHeight = canvas.height * scaleFactor;
+
+    // Draw the image scaled
+    ctx.drawImage(image, 0, 0, scaledWidth, scaledHeight);
+
+    let pixels = ctx.getImageData(0, 0, scaledWidth, scaledHeight).data;
     let imageData = [];
     for (let i = 0; i < pixels.length; i += 4) {
         imageData.push([pixels[i], pixels[i + 1], pixels[i + 2]]);
     }
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    init(imageData, canvas.width, canvas.height);
+    init(imageData, scaledWidth, scaledHeight);
     animate();
 };
