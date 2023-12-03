@@ -97,17 +97,22 @@ function init(imageData, width, height) {
 const image = new Image();
 image.src = 'assets/Banner.png';
 image.onload = function() {
-    const scaleFactor = 0.25; // Scale factor (0.5 for half size, for example)
+    const scaleFactor = 0.5; // Adjust this as needed
     const scaledWidth = canvas.width * scaleFactor;
     const scaledHeight = canvas.height * scaleFactor;
 
-    // Draw the image scaled
     ctx.drawImage(image, 0, 0, scaledWidth, scaledHeight);
-
     let pixels = ctx.getImageData(0, 0, scaledWidth, scaledHeight).data;
     let imageData = [];
+
     for (let i = 0; i < pixels.length; i += 4) {
-        imageData.push([pixels[i], pixels[i + 1], pixels[i + 2]]);
+        let alpha = pixels[i + 3];
+        if (alpha > 0) { // Check if the pixel is not fully transparent
+            let red = pixels[i];
+            let green = pixels[i + 1];
+            let blue = pixels[i + 2];
+            imageData.push([red, green, blue, alpha]);
+        }
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
