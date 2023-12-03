@@ -4,7 +4,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particlesArray = [];
-const numberOfParticles = 50000;
+const numberOfParticles = 5000;
 
 const mouse = {
     x: null,
@@ -97,7 +97,7 @@ function init(imageData, width, height) {
 const image = new Image();
 image.src = 'assets/Banner.png';
 image.onload = function() {
-    const scaleFactor = 0.5; // Scale factor (0.5 for half size, for example)
+    const scaleFactor = 0.25; // Scale factor (0.5 for half size, for example)
     const scaledWidth = canvas.width * scaleFactor;
     const scaledHeight = canvas.height * scaleFactor;
 
