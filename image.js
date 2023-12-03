@@ -72,6 +72,7 @@ function init() {
     image.onload = function() {
         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        console.log("Image loaded and drawn on canvas.");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         let grid = Math.ceil(Math.sqrt(numberOfParticles));
@@ -89,6 +90,7 @@ function init() {
             }
         }
     };
+    console.log("Script loaded. Waiting for image to load.");
 }
 
 init();
