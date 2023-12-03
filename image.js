@@ -87,8 +87,7 @@ function init(imageData, width, height) {
 
 // Load and process image
 const image = new Image();
-image.crossOrigin = "anonymous";
-image.src = 'https://cors-anywhere.herokuapp.com/' + encodeURIComponent('assets/Banner.png');
+image.src = 'assets/Banner.png';
 image.onload = function() {
     ctx.drawImage(image, 0, 0);
     let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
